@@ -1,0 +1,9 @@
+MEMORY_SIZE 0
+MEMORY_TYPE 0
+BOARD_TYPE UDOO
+CPU_TYPE QUAD
+OS_TYPE LINUX
+ENV_DEVICE MMC
+CLEAN_OP NOCLEAN
+COMPILER /home/udoo/udoo/crosscompiler/arm-fsl-linux-gnueabi/bin/arm-fsl-linux-gnueabi-
+UBOOT_VER imx6_udoo_2013_09_05_dual
