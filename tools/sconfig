@@ -1,9 +1,9 @@
 MEMORY_SIZE 0
 MEMORY_TYPE 0
 BOARD_TYPE UDOO
-CPU_TYPE QUAD
+CPU_TYPE DUAL_LITE
 OS_TYPE LINUX
 ENV_DEVICE MMC
-CLEAN_OP NOCLEAN
-COMPILER /home/udoo/udoo/crosscompiler/arm-fsl-linux-gnueabi/bin/arm-fsl-linux-gnueabi-
-UBOOT_VER imx6_udoo_2013_09_05_dual
+CLEAN_OP CLEAN
+COMPILER /opt/freescale/usr/local/gcc-4.4.4-glibc-2.11.1-multilib-1.0/arm-fsl-linux-gnueabi/bin/arm-fsl-linux-gnueabi-
+UBOOT_VER imx6_udoo_2013_09_10_QUAD_R1504
