@@ -173,7 +173,7 @@ COBJS-$(CONFIG_UPDATE_TFTP) += update.o
 COBJS-$(CONFIG_USB_KEYBOARD) += usb_kbd.o
 COBJS-$(CONFIG_FASTBOOT) += cmd_fastboot.o
 COBJS-$(CONFIG_CMD_IMXOTP) += cmd_imxotp.o
-COBJS-$(CONFIG_CMD_UDOOCONFIG) += cmd_udooconfig.o
+#COBJS-$(CONFIG_CMD_UDOOCONFIG) += cmd_udooconfig.o
 COBJS-$(CONFIG_CMD_RTC) += cmd_rtc.o
 
 COBJS	:= $(sort $(COBJS-y))
