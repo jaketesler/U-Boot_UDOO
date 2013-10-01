@@ -11,8 +11,6 @@ type_os_android="ANDROID"
 CONFIG_FILE="./tools/sconfig"
 
 env_MMC="MMC"
-env_SATA="SATA"
-env_SPI="SPI"
 
 BACKTITLE='U-boot UDOO config'
 
@@ -151,7 +149,6 @@ ddr_size_view() {
 			--default-item $MEM_SIZE \
 			--radiolist "Select DDR type:" 20 80 10 \
 			0 "1Giga, bus size 64, active CS = 1 (256Mx4)" ${VAL[0]} \
-			1 "2Giga, bus size 64, active CS = 1 (512Mx4)" ${VAL[1]} \
 			2>&1 1>&3)
 	 
 	# close fd
@@ -277,9 +274,7 @@ env_dev_view() {
 	exec 3>&1
 	VAL=(off off off)
 	case "$ENV_DEV" in
-		 "${env_MMC}") VAL[0]=on;; 
-		"${env_SATA}") VAL[1]=on;;
-		 "${env_SPI}") VAL[2]=on;;
+		 "${env_MMC}") VAL[0]=on;; 		
 	esac
 	# Store data to $VALUES variable
 	SELECTION=$(dialog --title "Environment device" \
@@ -289,8 +284,6 @@ env_dev_view() {
 			--default-item $ENV_DEV \
 			--radiolist "Select device for environmnet storing:" 20 60 10 \
 			$env_MMC "SD/MMC as environment device"  ${VAL[0]} \
- 			$env_SATA "SATA as environment device"  ${VAL[1]} \
-			$env_SPI "SPI as enviroment device"  ${VAL[2]} \
 			2>&1 1>&3)
 	 
 	# close fd
@@ -400,9 +393,6 @@ function check_mem_size () {
 	if [ "${MEM_SIZE}" == "0" ]; then
 		echo "RAM size selected: 1Giga, bus size 64, active CS = 1 (256Mx4)"
 		SUFFIX=${SUFFIX}-256MBx4
-	elif [ "${MEM_SIZE}" == "1" ]; then
-		echo "RAM size selected: 2Giga, bus size 64, active CS = 1 (512Mx4)"
-		SUFFIX=${SUFFIX}-2GB
 	else
 		echo "ERROR: wrong DDR size selected"
 		exit 0
@@ -464,10 +454,6 @@ function check_env_device_type () {
 	echo ""
 	if [ "${ENV_DEV}" == "${env_MMC}" ]; then
 		echo "Environment selected: MMC"
-	elif [ "${ENV_DEV}" == "${env_SATA}" ]; then
-		echo "Environment selected: SATA"
-	elif [ "${ENV_DEV}" == "${env_SPI}" ]; then
-		echo "Environment selected: SPI"
 	else
 		echo "ERROR: wrong environment selected"
 		exit 0
