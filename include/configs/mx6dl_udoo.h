@@ -175,10 +175,32 @@
 #define CONFIG_LOADADDR		0x10800000
 #define CONFIG_RD_LOADADDR      (0x10800000 + 0x300000)
 #define	CONFIG_EXTRA_ENV_SETTINGS					\
+	"netdev=eth0\0"			\
+	"ethprime=FEC0\0"			\
 	"uboot=u-boot.bin\0"			\
 	"kernel=uImage\0"			\
-	"bootargs=console=ttymxc1,115200 root=/dev/mmcblk0p1 rootwait rw fixrtc rootflags=barrier=1 mem=768M arm_freq=996 video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24\0"	\
-	"bootcmd=mmc dev 2; ext2load mmc 2:1 10800000 /boot/uImage; bootm 10800000\0"
+	"nfsroot=/opt/eldk/arm\0"			\
+	"bootargs_base=setenv bootargs console=ttymxc0,115200\0"			\
+	"bootargs_nfs=setenv bootargs ${bootargs} root=/dev/nfs ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0"			\
+	"bootcmd_net=run bootargs_base bootargs_nfs; tftpboot ${loadaddr} ${kernel}; bootm\0"			\
+	"bootargs_mmc=setenv bootargs ${bootargs} ip=dhcp root=/dev/mmcblk0p1 rootwait\0"			\
+	"bootcmd_mmc=run bootargs_base bootargs_mmc; mmc dev 3; mmc read ${loadaddr} 0x800 0x2000; bootm\0"			\
+	"ethact=FEC0\0"			\
+	"bootargs=console=ttymxc0,115200 root=/dev/nfs ip=dhcp nfsroot=192.168.1.101:/opt/eldk/arm,v3,tcp\0"			\
+	"memory=mem=768M\0"			\
+	"bootdev=mmc dev 2; ext2load mmc 2:1\0"			\
+	"root=root=/dev/mmcblk0p1\0"			\
+	"option=rootwait rw fixrtc rootflags=barrier=1\0"			\
+	"setvideomode=setenv videomode video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24\0"			\
+	"cpu_freq=arm_freq=996\0"			\
+	"run_from_nfs=0\0"			\
+	"setbootargs_nfs=setenv bootargs console=ttymxc1,115200 root=/dev/nfs nfsroot=${ip_server}:${nfs_path}nolock,wsize=4096,rsize=4096 ip=${ip_local} ${memory} ${cpu_freq} ${videomode}\0"			\
+	"setbootargs=setenv bootargs console=ttymxc1,115200 ${root} ${option} ${memory} ${cpu_freq} ${videomode}\0"			\
+	"setbootdev=setenv boot_dev ${bootdev} 10800000 /boot/uImage\0"			\
+	"bootcmd=run setvideomode; run setbootargs; run setbootdev; run boot_dev; bootm 10800000\0"			\
+	"stdin=serial\0"			\
+	"stdout=serial\0"			\
+	"stderr=serial\0"
 #endif
 
 
@@ -452,7 +474,7 @@
 
 
 #define CONFIG_CMD_BOOTI
-//#define CONFIG_ANDROID_RECOVERY
+#define CONFIG_ANDROID_RECOVERY
 /* which mmc bus is your main storage ? */
 #define CONFIG_ANDROID_MAIN_MMC_BUS 3
 
