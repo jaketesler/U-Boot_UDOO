@@ -64,6 +64,11 @@
 /* Android mkbootimg format*/
 #include <bootimg.h>
 
+#if defined(CONFIG_CMD_SATA)
+#include <asm/io.h>
+extern int disable_sata_clock(void);
+#endif
+
 DECLARE_GLOBAL_DATA_PTR;
 
 extern int gunzip (void *dst, int dstlen, unsigned char *src, unsigned long *lenp);
@@ -595,19 +600,16 @@ int do_bootm (cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 			return do_bootm_subcommand(cmdtp, flag, argc, argv);
 	}
 
+	if (bootm_start(cmdtp, flag, argc, argv))
+		return 1;
+
 #ifdef CONFIG_SECURE_BOOT
-	extern uint32_t authenticate_image(
-			uint32_t ddr_start, uint32_t image_size);
-	if (authenticate_image(load_addr,
-			image_get_image_size((image_header_t *)load_addr)) == 0) {
+	extern uint32_t authenticate_image(ulong start);
+	if (authenticate_image(images.os.start) == 0) {
 		printf("Authenticate UImage Fail, Please check\n");
 		return 1;
 	}
-
 #endif
-
-	if (bootm_start(cmdtp, flag, argc, argv))
-		return 1;
 
 	/*
 	 * We have reached the point of no return: we are going to
@@ -627,6 +629,11 @@ int do_bootm (cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 	 * details see the OpenHCI specification.
 	 */
 	usb_stop();
+#endif
+
+#ifdef CONFIG_CMD_SATA
+	writel(0x059124c4, 0x020e0034);
+	disable_sata_clock();
 #endif
 
 #ifdef CONFIG_AMIGAONEG3SE
@@ -736,12 +743,6 @@ static image_header_t *image_get_kernel (ulong img_addr, int verify)
 		image_set_load(hdr, image_get_load(hdr)+0x20000000);
 	if (image_get_ep(hdr) < 0x90000000)
 		image_set_ep(hdr, image_get_ep(hdr)+0x20000000);
-#endif
-#if defined(CONFIG_MX6SL)
-	if (image_get_load(hdr) < 0x80000000)
-		image_set_load(hdr, image_get_load(hdr)+0x70000000);
-	if (image_get_ep(hdr) < 0x80000000)
-		image_set_ep(hdr, image_get_ep(hdr)+0x70000000);
 #endif
 
 	show_boot_progress (3);
@@ -1521,10 +1522,6 @@ int do_booti(cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 	char *ptn = "boot";
 	int mmcc = -1;
 	boot_img_hdr *hdr = (void *)boothdr;
-#ifdef CONFIG_SECURE_BOOT
-    u_int32_t load_addr;
-    uint32_t image_size;
-#endif
 
 	if (argc < 2)
 		return -1;
@@ -1672,21 +1669,6 @@ int do_booti(cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 
 	printf("kernel   @ %08x (%d)\n", hdr->kernel_addr, hdr->kernel_size);
 	printf("ramdisk  @ %08x (%d)\n", hdr->ramdisk_addr, hdr->ramdisk_size);
-
-#ifdef CONFIG_SECURE_BOOT
-#define IVT_SIZE 0x20
-#define CSF_PAD_SIZE 0x2000
-	extern uint32_t authenticate_image(uint32_t ddr_start,
-					   uint32_t image_size);
-
-	image_size = hdr->ramdisk_addr + hdr->ramdisk_size - hdr->kernel_addr -
-		IVT_SIZE - CSF_PAD_SIZE;
-
-	if (authenticate_image(hdr->kernel_addr, image_size))
-		printf("Authentication Successful\n");
-	else
-		printf("Authentication Failed\n");
-#endif
 
 	do_booti_linux(hdr);
 
