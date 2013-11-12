@@ -1730,6 +1730,120 @@ void disable_watchdog(void)
 	writel(reg, GPIO5_BASE_ADDR + GPIO_DR);
 }
 
+void configure_arduino_serial_programming(void)
+{
+	u32 reg;
+	
+#ifdef CONFIG_MX6Q
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_GPIO_0__GPIO_1_0);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_DISP0_DAT0__GPIO_4_21);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_KEY_COL0__GPIO_4_6);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_KEY_ROW0__GPIO_4_7);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_CSI0_DAT11__GPIO_5_29);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_SD1_CLK__GPIO_1_20);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_GPIO_1__GPIO_1_1);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_GPIO_3__GPIO_1_3);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_SD4_DAT0__GPIO_2_8);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_EIM_D21__GPIO_3_21);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_EIM_D28__GPIO_3_28);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_DISP0_DAT21__GPIO_5_15);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_EIM_A16__GPIO_2_22);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_GPIO_18__GPIO_7_13);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_NANDF_D0__GPIO_2_0);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_NANDF_D3__GPIO_2_3);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_NANDF_D2__GPIO_2_2);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_NANDF_D1__GPIO_2_1);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_GPIO_19__GPIO_4_5);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_DISP0_DAT22__GPIO_5_16);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_DISP0_DAT23__GPIO_5_17);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_EIM_D25__GPIO_3_25);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_KEY_ROW1__GPIO_4_9);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_KEY_COL1__GPIO_4_8);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_EIM_OE__GPIO_2_25);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_EIM_CS1__GPIO_2_24);
+	mxc_iomux_v3_setup_pad(MX6Q_PAD_EIM_CS0__GPIO_2_23);
+#elif defined CONFIG_MX6DL
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_GPIO_0__GPIO_1_0);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_DISP0_DAT0__GPIO_4_21);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_KEY_COL0__GPIO_4_6);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_KEY_ROW0__GPIO_4_7);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_CSI0_DAT11__GPIO_5_29);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_SD1_CLK__GPIO_1_20);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_GPIO_1__GPIO_1_1);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_GPIO_3__GPIO_1_3);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_SD4_DAT0__GPIO_2_8);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_EIM_D21__GPIO_3_21);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_EIM_D28__GPIO_3_28);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_DISP0_DAT21__GPIO_5_15);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_EIM_A16__GPIO_2_22);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_GPIO_18__GPIO_7_13);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_NANDF_D0__GPIO_2_0);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_NANDF_D3__GPIO_2_3);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_NANDF_D2__GPIO_2_2);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_NANDF_D1__GPIO_2_1);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_GPIO_19__GPIO_4_5);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_DISP0_DAT22__GPIO_5_16);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_DISP0_DAT23__GPIO_5_17);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_EIM_D25__GPIO_3_25);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_KEY_ROW1__GPIO_4_9);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_KEY_COL1__GPIO_4_8);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_EIM_OE__GPIO_2_25);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_EIM_CS1__GPIO_2_24);
+	mxc_iomux_v3_setup_pad(MX6DL_PAD_EIM_CS0__GPIO_2_23);
+#endif
+
+	/* set input gpio_1 */
+	reg = readl(GPIO1_BASE_ADDR + GPIO_GDIR);
+	reg &= ~(1 << 0);
+	reg &= ~(1 << 20);
+	reg &= ~(1 << 1);
+	reg &= ~(1 << 3);
+	writel(reg, GPIO1_BASE_ADDR + GPIO_GDIR);
+	
+	/* set input gpio_2 */
+	reg = readl(GPIO2_BASE_ADDR + GPIO_GDIR);
+	reg &= ~(1 << 8);
+	reg &= ~(1 << 22);
+	reg &= ~(1 << 0);
+	reg &= ~(1 << 3);
+	reg &= ~(1 << 2);
+	reg &= ~(1 << 1);
+	reg &= ~(1 << 25);
+	reg &= ~(1 << 24);
+	reg &= ~(1 << 23);
+	writel(reg, GPIO2_BASE_ADDR + GPIO_GDIR);
+
+	/* set input gpio_3 */
+	reg = readl(GPIO3_BASE_ADDR + GPIO_GDIR);
+	reg &= ~(1 << 21);
+	reg &= ~(1 << 28);
+	reg &= ~(1 << 25);
+	writel(reg, GPIO3_BASE_ADDR + GPIO_GDIR);
+
+	/* set input gpio_4 */
+	reg = readl(GPIO4_BASE_ADDR + GPIO_GDIR);
+	reg &= ~(1 << 21);
+	reg &= ~(1 << 6);
+	reg &= ~(1 << 7);
+	reg &= ~(1 << 5);
+	reg &= ~(1 << 9);
+	reg &= ~(1 << 8);
+	writel(reg, GPIO4_BASE_ADDR + GPIO_GDIR);
+	
+	/* set input gpio_5 */
+	reg = readl(GPIO5_BASE_ADDR + GPIO_GDIR);
+	reg &= ~(1 << 29);
+	reg &= ~(1 << 15);
+	reg &= ~(1 << 16);
+	reg &= ~(1 << 17);
+	writel(reg, GPIO5_BASE_ADDR + GPIO_GDIR);
+	
+	/* set input gpio_7 */
+	reg = readl(GPIO7_BASE_ADDR + GPIO_GDIR);
+	reg &= ~(1 << 13);
+	writel(reg, GPIO7_BASE_ADDR + GPIO_GDIR);
+}
+
 int board_init(void)
 {
 /* need set Power Supply Glitch to 0x41736166
@@ -1808,6 +1922,10 @@ int board_init(void)
 #ifdef CONFIG_MXC_EPDC
 	setup_epdc();
 #endif
+
+	/* Configure the serial need for program arduino */
+	configure_arduino_serial_programming();
+	
 	return 0;
 }
 
@@ -1909,8 +2027,8 @@ iomux_v3_cfg_t enet_pads[] = {
 	MX6Q_PAD_RGMII_RD2__ENET_RGMII_RD2,
 	MX6Q_PAD_RGMII_RD3__ENET_RGMII_RD3,
 	MX6Q_PAD_RGMII_RX_CTL__ENET_RGMII_RX_CTL,
-	MX6Q_PAD_GPIO_0__CCM_CLKO,
-	MX6Q_PAD_GPIO_3__CCM_CLKO2,
+	//MX6Q_PAD_GPIO_0__CCM_CLKO,
+	//MX6Q_PAD_GPIO_3__CCM_CLKO2,
 };
 #elif defined CONFIG_MX6DL
 iomux_v3_cfg_t enet_pads[] = {
@@ -1929,7 +2047,7 @@ iomux_v3_cfg_t enet_pads[] = {
 	MX6DL_PAD_RGMII_RD2__ENET_RGMII_RD2,
 	MX6DL_PAD_RGMII_RD3__ENET_RGMII_RD3,
 	MX6DL_PAD_RGMII_RX_CTL__ENET_RGMII_RX_CTL,
-	MX6DL_PAD_GPIO_0__CCM_CLKO,
+	//MX6DL_PAD_GPIO_0__CCM_CLKO,
 };
 #endif
 
