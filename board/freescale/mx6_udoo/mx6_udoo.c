@@ -343,7 +343,8 @@ int setup_sata(void)
 	 * mpll_ck_off_b = 0x1 [1]
 	 * tx_edgerate_0 = 0x0 [0]
 	 * */
-	reg |= 0x59124c6;
+//	reg |= 0x59124c6;
+	reg |= 0x0593A046;  // Safe configuration to have u-boot works well on every uDOO board
 	writel(reg, IOMUXC_BASE_ADDR + 0x34);
 
 	if (sata_curr_device == -1) {
