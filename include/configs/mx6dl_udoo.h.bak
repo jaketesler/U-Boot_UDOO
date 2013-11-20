@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2012 Freescale Semiconductor, Inc.
  *
- * Configuration settings for the MX6Q Sabre Lite2 Freescale board.
+ * Configuration settings for the MX6DL SabreSD Freescale board.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -27,17 +27,14 @@
  /* High Level Configuration Options */
 #define CONFIG_ARMV7	/* This is armv7 Cortex-A9 CPU core */
 #define CONFIG_MXC
-#define CONFIG_MX6Q
-#define CONFIG_MX6Q_UDOO
+#define CONFIG_MX6DL
+#define CONFIG_MX6DL_DDR3
+#define CONFIG_MX6DL_UDOO
+
+ /* for DDR 64bit */
 #define CONFIG_FLASH_HEADER
 #define CONFIG_FLASH_HEADER_OFFSET 0x400
 #define CONFIG_MX6_CLK32	   32768
-
-#define CONFIG_SKIP_RELOCATE_UBOOT
-
-#define CONFIG_ARCH_CPU_INIT
-#undef CONFIG_ARCH_MMU /* disable MMU first */
-#define CONFIG_L2_OFF  /* disable L2 cache first*/
 
 /* CONFIG_DDR_SIZE:
 		0 ->  512M,  bus size 32, active CS = 1 (256Mx2);
@@ -52,7 +49,6 @@
 		1 ->  LDDR3
 */
 #define CONFIG_DDR_SIZE	DDR_SIZE_CONF
-
 #define CONFIG_DDR_TYPE DDR_TYPE_CONF
 
 #if(CONFIG_DDR_SIZE == 0)
@@ -60,6 +56,18 @@
 #elif(CONFIG_DDR_SIZE > 0)
 	#define CONFIG_DDR_64BIT
 #endif
+
+
+/* Disable secure boot feature in default, if you want to enable this
+ * feature, please carefully read related documents, you may needs to
+ * change u-boot.lds */
+#undef CONFIG_SECURE_BOOT
+
+#define CONFIG_SKIP_RELOCATE_UBOOT
+
+#define CONFIG_ARCH_CPU_INIT
+#undef CONFIG_ARCH_MMU /* disable MMU first */
+#define CONFIG_L2_OFF  /* disable L2 cache first*/
 
 #define CONFIG_MX6_HCLK_FREQ	24000000
 
@@ -76,6 +84,7 @@
 #define CONFIG_SETUP_MEMORY_TAGS
 #define CONFIG_INITRD_TAG
 #define CONFIG_MXC_GPIO
+#define CONFIG_BOARD_REVISION_ATAG
 #define CONFIG_BOARD_REVISION_TAG
 
 /*
@@ -138,7 +147,6 @@
 #define CONFIG_CMD_CLOCK
 #define CONFIG_REF_CLK_FREQ CONFIG_MX6_HCLK_FREQ
 
-#define CONFIG_CMD_SATA
 #undef CONFIG_CMD_IMLS
 
 #define CONFIG_CMD_IMX_DOWNLOAD_MODE
@@ -160,7 +168,7 @@
 		"splashimage=0x30000000\0"				\
 		"splashpos=m,m\0"					\
 		"lvds_num=1\0"                   \
-		"bootargs=console=ttymxc3,115200 init=/init video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24,bpp=32 video=mxcfb1:off video=mxcfb2:off fbmem=28M vmalloc=400M androidboot.console=ttymxc3 androidboot.hardware=freescale\0"
+		"bootargs=console=ttymxc1,115200 init=/init video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24,bpp=32 video=mxcfb1:off video=mxcfb2:off fbmem=28M vmalloc=400M androidboot.console=ttymxc1 androidboot.hardware=freescale\0"
 #endif
 
 #ifdef UDOO_LINUX
@@ -172,13 +180,13 @@
 	"uboot=u-boot.bin\0"			\
 	"kernel=uImage\0"			\
 	"nfsroot=/opt/eldk/arm\0"			\
-	"bootargs_base=setenv bootargs console=ttymxc3,115200\0"			\
+	"bootargs_base=setenv bootargs console=ttymxc0,115200\0"			\
 	"bootargs_nfs=setenv bootargs ${bootargs} root=/dev/nfs ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0"			\
 	"bootcmd_net=run bootargs_base bootargs_nfs; tftpboot ${loadaddr} ${kernel}; bootm\0"			\
 	"bootargs_mmc=setenv bootargs ${bootargs} ip=dhcp root=/dev/mmcblk0p1 rootwait\0"			\
 	"bootcmd_mmc=run bootargs_base bootargs_mmc; mmc dev 3; mmc read ${loadaddr} 0x800 0x2000; bootm\0"			\
 	"ethact=FEC0\0"			\
-	"bootargs=console=ttymxc3,115200 root=/dev/nfs ip=dhcp nfsroot=192.168.1.101:/opt/eldk/arm,v3,tcp\0"			\
+	"bootargs=console=ttymxc0,115200 root=/dev/nfs ip=dhcp nfsroot=192.168.1.101:/opt/eldk/arm,v3,tcp\0"			\
 	"memory=mem=768M\0"			\
 	"bootdev=mmc dev 2; ext2load mmc 2:1\0"			\
 	"root=root=/dev/mmcblk0p1\0"			\
@@ -186,8 +194,8 @@
 	"setvideomode=setenv videomode video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24\0"			\
 	"cpu_freq=arm_freq=996\0"			\
 	"run_from_nfs=0\0"			\
-	"setbootargs_nfs=setenv bootargs console=ttymxc3,115200 root=/dev/nfs nfsroot=${ip_server}:${nfs_path}nolock,wsize=4096,rsize=4096 ip=${ip_local} ${memory} ${cpu_freq} ${videomode}\0"			\
-	"setbootargs=setenv bootargs console=ttymxc3,115200 ${root} ${option} ${memory} ${cpu_freq} ${videomode}\0"			\
+	"setbootargs_nfs=setenv bootargs console=ttymxc1,115200 root=/dev/nfs nfsroot=${ip_server}:${nfs_path}nolock,wsize=4096,rsize=4096 ip=${ip_local} ${memory} ${cpu_freq} ${videomode}\0"			\
+	"setbootargs=setenv bootargs console=ttymxc1,115200 ${root} ${option} ${memory} ${cpu_freq} ${videomode}\0"			\
 	"setbootdev=setenv boot_dev ${bootdev} 10800000 /boot/uImage\0"			\
 	"bootcmd=run setvideomode; run setbootargs; run setbootdev; run boot_dev; bootm 10800000\0"			\
 	"stdin=serial\0"			\
@@ -203,7 +211,7 @@
  */
 #define CONFIG_SYS_LONGHELP		/* undef to save memory */
 
-#define CONFIG_SYS_PROMPT		"MX6Q UDOO U-Boot > "
+#define CONFIG_SYS_PROMPT		"MX6DL UDOO U-Boot > "
 
 #define CONFIG_AUTO_COMPLETE
 #define CONFIG_SYS_CBSIZE		1024	/* Console I/O Buffer Size */
@@ -228,8 +236,7 @@
 #define CONFIG_FEC0_MIIBASE	-1
 #define CONFIG_GET_FEC_MAC_ADDR_FROM_IIM
 #define CONFIG_MXC_FEC
-#define CONFIG_FEC0_PHY_ADDR		0xFF
-#define CONFIG_DISCOVER_PHY
+#define CONFIG_FEC0_PHY_ADDR		1
 #define CONFIG_ETH_PRIME
 #define CONFIG_RMII
 #define CONFIG_CMD_MII
@@ -258,6 +265,7 @@
 	#define CONFIG_SYS_I2C_PORT             I2C1_BASE_ADDR
 	#define CONFIG_SYS_I2C_SPEED            100000
 	#define CONFIG_SYS_I2C_SLAVE            0x8
+	#define CONFIG_MX6_INTER_LDO_BYPASS	0
 #endif
 
 /*
@@ -265,8 +273,8 @@
  */
 #ifdef CONFIG_CMD_SF
 	#define CONFIG_FSL_SF		1
-	#define CONFIG_SPI_FLASH_IMX_SST	1
-	#define CONFIG_SPI_FLASH_CS	1
+	#define CONFIG_SPI_FLASH_IMX_M25PXX	1
+	#define CONFIG_SPI_FLASH_CS	0
 	#define CONFIG_IMX_ECSPI
 	#define IMX_CSPI_VER_2_3	1
 	#define MAX_SPI_BYTES		(64 * 4)
@@ -303,22 +311,6 @@
 #endif
 
 /*
- * SATA Configs
- */
-#ifdef CONFIG_CMD_SATA
-	#define CONFIG_DWC_AHSATA
-	#define CONFIG_SYS_SATA_MAX_DEVICE	1
-	#define CONFIG_DWC_AHSATA_PORT_ID	0
-	#define CONFIG_DWC_AHSATA_BASE_ADDR	SATA_ARB_BASE_ADDR
-	#define CONFIG_LBA48
-	#define CONFIG_LIBATA
-
-	#define CONFIG_DOS_PARTITION	1
-	#define CONFIG_CMD_FAT		1
-	#define CONFIG_CMD_EXT2		1
-#endif
-
-/*
  * GPMI Nand Configs
  */
 /* #define CONFIG_CMD_NAND */
@@ -352,17 +344,12 @@
  * Physical Memory Map
  */
  
-/* CONFIG_DDR_SIZE:
-		0 ->  512M,  bus size 32, active CS = 1 (256Mx2);
-		1 ->  1Giga, bus size 32, active CS = 1 (512Mx2);
-		2 ->  1Giga, bus size 64, active CS = 1 (256Mx4);
-		3 ->  2Giga, bus size 64, active CS = 1 (512Mx4);
-		4 ->  4Giga, bus size 64, active CS = 2 (512Mx8);
-*/
-
-/* CONFIG_DDR_TYPE:     
-		0 ->  DDR3
-		1 ->  LDDR3
+/* RAM Settings*/
+/* DDR_TYPE: 0 ->  512M,  bus size 32, active CS = 1 (256Mx2);
+	     1 ->  1Giga, bus size 32, active CS = 1 (512Mx2);
+	     2 ->  1Giga, bus size 64, active CS = 1 (256Mx4) only for DL;
+             3 ->  2Giga, bus size 64, active CS = 1 (512Mx4) only for DL;
+             4 ->  4Giga, bus size 64, active CS = 2 (512Mx8) only for DL;
 */
 
 #define CONFIG_NR_DRAM_BANKS	1
@@ -392,11 +379,8 @@
  */
 #define CONFIG_SYS_NO_FLASH
 
-/* Monitor at beginning of flash */
 #ifdef ENV_MMC
 	#define CONFIG_FSL_ENV_IN_MMC
-#elif defined(ENV_SATA) 
-	#define CONFIG_FSL_ENV_IN_SATA
 #elif defined(ENV_SPI)
 	#define CONFIG_FSL_ENV_IN_SF
 #else
@@ -412,10 +396,6 @@
 #elif defined(CONFIG_FSL_ENV_IN_MMC)
 	#define CONFIG_ENV_IS_IN_MMC	1
 	#define CONFIG_ENV_OFFSET	(768 * 1024)
-#elif defined(CONFIG_FSL_ENV_IN_SATA)
-	#define CONFIG_ENV_IS_IN_SATA   1
-	#define CONFIG_SATA_ENV_DEV     0
-	#define CONFIG_ENV_OFFSET       (768 * 1024)
 #elif defined(CONFIG_FSL_ENV_IN_SF)
 	#define CONFIG_ENV_IS_IN_SPI_FLASH	1
 	#define CONFIG_ENV_SPI_CS		1
@@ -436,16 +416,33 @@
 	 * Framebuffer and LCD
 	 */
 	#define CONFIG_LCD
+	#define CONFIG_FB_BASE				(TEXT_BASE + 0x300000)
+	#define CONFIG_SYS_CONSOLE_IS_IN_ENV
+#ifdef CONFIG_MXC_EPDC
+	#undef LCD_TEST_PATTERN
+	/* #define CONFIG_SPLASH_IS_IN_MMC			1 */
+	#define LCD_BPP					LCD_MONOCHROME
+	/* #define CONFIG_SPLASH_SCREEN_ALIGN		1 */
+
+	#define CONFIG_WORKING_BUF_ADDR			(TEXT_BASE + 0x100000)
+	#define CONFIG_WAVEFORM_BUF_ADDR		(TEXT_BASE + 0x200000)
+	#define CONFIG_WAVEFORM_FILE_OFFSET		0x600000
+	#define CONFIG_WAVEFORM_FILE_SIZE		0xF0A00
+	#define CONFIG_WAVEFORM_FILE_IN_MMC
+
+#ifdef CONFIG_SPLASH_IS_IN_MMC
+	#define CONFIG_SPLASH_IMG_OFFSET		0x4c000
+	#define CONFIG_SPLASH_IMG_SIZE			0x19000
+#endif
+#else /* !CONFIG_MXC_EPDC */
 	#define CONFIG_IPU_V3H
 	#define CONFIG_VIDEO_MX5
 	#define CONFIG_IPU_CLKRATE	260000000
 	#define CONFIG_SYS_CONSOLE_ENV_OVERWRITE
 	#define CONFIG_SYS_CONSOLE_OVERWRITE_ROUTINE
-	#define CONFIG_SYS_CONSOLE_IS_IN_ENV
 	#define LCD_BPP		LCD_COLOR16
 	#define CONFIG_CMD_BMP
 	#define CONFIG_BMP_8BPP
-	#define CONFIG_FB_BASE	(TEXT_BASE + 0x300000)
 	#define CONFIG_SPLASH_SCREEN_ALIGN
 	#define CONFIG_SYS_WHITE_ON_BLACK
 
@@ -453,6 +450,7 @@
 	#define IMX_PWM1_BASE    PWM1_BASE_ADDR
 	#define IMX_PWM2_BASE    PWM2_BASE_ADDR
 #endif
+#endif /* CONFIG_SPLASH_SCREEN */
 #endif				/* __CONFIG_H */
 
 #define CONFIG_USB_DEVICE

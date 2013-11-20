@@ -168,7 +168,7 @@
 		"splashimage=0x30000000\0"				\
 		"splashpos=m,m\0"					\
 		"lvds_num=1\0"                   \
-		"bootargs=console=ttymxc1,115200 init=/init video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24,bpp=32 video=mxcfb1:off video=mxcfb2:off fbmem=28M vmalloc=400M androidboot.console=ttymxc1 androidboot.hardware=freescale\0"
+		"bootargs=console=ttymxc3,115200 init=/init video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24,bpp=32 video=mxcfb1:off video=mxcfb2:off fbmem=28M vmalloc=400M androidboot.console=ttymxc3 androidboot.hardware=freescale\0"
 #endif
 
 #ifdef UDOO_LINUX
@@ -180,13 +180,13 @@
 	"uboot=u-boot.bin\0"			\
 	"kernel=uImage\0"			\
 	"nfsroot=/opt/eldk/arm\0"			\
-	"bootargs_base=setenv bootargs console=ttymxc0,115200\0"			\
+	"bootargs_base=setenv bootargs console=ttymxc3,115200\0"			\
 	"bootargs_nfs=setenv bootargs ${bootargs} root=/dev/nfs ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0"			\
 	"bootcmd_net=run bootargs_base bootargs_nfs; tftpboot ${loadaddr} ${kernel}; bootm\0"			\
 	"bootargs_mmc=setenv bootargs ${bootargs} ip=dhcp root=/dev/mmcblk0p1 rootwait\0"			\
 	"bootcmd_mmc=run bootargs_base bootargs_mmc; mmc dev 3; mmc read ${loadaddr} 0x800 0x2000; bootm\0"			\
 	"ethact=FEC0\0"			\
-	"bootargs=console=ttymxc0,115200 root=/dev/nfs ip=dhcp nfsroot=192.168.1.101:/opt/eldk/arm,v3,tcp\0"			\
+	"bootargs=console=ttymxc3,115200 root=/dev/nfs ip=dhcp nfsroot=192.168.1.101:/opt/eldk/arm,v3,tcp\0"			\
 	"memory=mem=768M\0"			\
 	"bootdev=mmc dev 2; ext2load mmc 2:1\0"			\
 	"root=root=/dev/mmcblk0p1\0"			\
@@ -194,8 +194,8 @@
 	"setvideomode=setenv videomode video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24\0"			\
 	"cpu_freq=arm_freq=996\0"			\
 	"run_from_nfs=0\0"			\
-	"setbootargs_nfs=setenv bootargs console=ttymxc1,115200 root=/dev/nfs nfsroot=${ip_server}:${nfs_path}nolock,wsize=4096,rsize=4096 ip=${ip_local} ${memory} ${cpu_freq} ${videomode}\0"			\
-	"setbootargs=setenv bootargs console=ttymxc1,115200 ${root} ${option} ${memory} ${cpu_freq} ${videomode}\0"			\
+	"setbootargs_nfs=setenv bootargs console=ttymxc3,115200 root=/dev/nfs nfsroot=${ip_server}:${nfs_path}nolock,wsize=4096,rsize=4096 ip=${ip_local} ${memory} ${cpu_freq} ${videomode}\0"			\
+	"setbootargs=setenv bootargs console=ttymxc3,115200 ${root} ${option} ${memory} ${cpu_freq} ${videomode}\0"			\
 	"setbootdev=setenv boot_dev ${bootdev} 10800000 /boot/uImage\0"			\
 	"bootcmd=run setvideomode; run setbootargs; run setbootdev; run boot_dev; bootm 10800000\0"			\
 	"stdin=serial\0"			\
