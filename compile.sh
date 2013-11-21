@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 type_udoo="UDOO"
 
@@ -139,7 +139,7 @@ main_view() {
 ddr_size_view() {
 	# open fd
 	exec 3>&1
-	VAL=(off off)
+	VAL={off off}
 	VAL[$MEM_SIZE]=on
 	# Store data to $VALUES variable
 	SELECTION=$(dialog --title "DDR configuration" \
