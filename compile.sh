@@ -28,7 +28,7 @@ BOARD=${type_udoo}
 CPU_TYPE=${type_cpu_q}
 OS_TYPE=${type_os_android}
 ENV_DEV=${env_MMC}
-CLEAN="CLEAN"
+CLEAN="NOCLEAN"
 COMPILER_PATH="/home/udoo/udoo/crosscompiler/arm-fsl-linux-gnueabi/bin/arm-fsl-linux-gnueabi-"
 UBOOT_VER="imx6_udoo"
 
