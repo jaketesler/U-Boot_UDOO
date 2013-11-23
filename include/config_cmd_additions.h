@@ -28,7 +28,9 @@
 #define CONFIG_CMD_SDRAM	/* SDRAM DIMM SPD info printout */
 #define CONFIG_CMD_SNTP		/* SNTP support		*/
 #define CONFIG_CMD_TERMINAL	/* built-in Serial Terminal	*/
-#define CONFIG_CMD_USB		/* USB Support			*/
+
+//#define CONFIG_CMD_USB		/* USB Support			*/ ##crashed compiler, 
+//##/home/ubuntu/udoocode/U-Boot_UDOO/include/usb.h:203:2: error: #error USB Lowlevel not defined
 
 
 
