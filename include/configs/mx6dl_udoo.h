@@ -112,6 +112,7 @@
  ***********************************************************/
 
 #include <config_cmd_default.h>
+#include <config_cmd_additions.h>
 
 #define CONFIG_CMD_PING
 #define CONFIG_CMD_DHCP
@@ -151,7 +152,7 @@
 
 #define CONFIG_CMD_IMX_DOWNLOAD_MODE
 
-#define CONFIG_BOOTDELAY 3
+#define CONFIG_BOOTDELAY 3  /*autoboot delay*/
 
 #define CONFIG_PRIME	"FEC0"
 
