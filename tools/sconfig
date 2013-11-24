@@ -5,5 +5,5 @@ CPU_TYPE DUAL_LITE
 OS_TYPE LINUX
 ENV_DEVICE MMC
 CLEAN_OP CLEAN
-COMPILER /home/udoo/udoo/crosscompiler/arm-fsl-linux-gnueabi/bin/arm-fsl-linux-gnueabi-
+COMPILER /usr/bin/
 UBOOT_VER imx6_udoo_2013_09_10
