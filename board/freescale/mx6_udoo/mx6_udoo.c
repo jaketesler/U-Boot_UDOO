@@ -385,11 +385,11 @@ static void setup_uart(void)
 	mxc_iomux_v3_setup_pad(MX6Q_PAD_EIM_D27__UART2_RXD);
 #elif defined CONFIG_MX6DL
 	/* UART2 TXD */
-	mxc_iomux_v3_setup_pad(MX6DL_PAD_EIM_D26__UART2_TXD);
+	//mxc_iomux_v3_setup_pad(MX6DL_PAD_EIM_D26__UART2_TXD);
 	mxc_iomux_v3_setup_pad(MX6DL_PAD_CSI0_DAT12__UART4_TXD);
 
 	/* UART2 RXD */
-	mxc_iomux_v3_setup_pad(MX6DL_PAD_EIM_D27__UART2_RXD);
+	//mxc_iomux_v3_setup_pad(MX6DL_PAD_EIM_D27__UART2_RXD);
 	mxc_iomux_v3_setup_pad(MX6DL_PAD_CSI0_DAT13__UART4_RXD);
 	
 #endif
