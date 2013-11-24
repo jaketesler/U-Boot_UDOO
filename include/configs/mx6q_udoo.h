@@ -89,7 +89,8 @@
  * Hardware drivers
  */
 #define CONFIG_MXC_UART
-#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR
+//#define CONFIG_UART_BASE_ADDR   UART4_BASE_ADDR		//uart4 (radio) serial
+#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR		//usb
 
 
 /* allow to overwrite serial and ethaddr */
@@ -103,6 +104,7 @@
  ***********************************************************/
 
 #include <config_cmd_default.h>
+#include <config_cmd_additions.h>
 
 #define CONFIG_CMD_PING
 #define CONFIG_CMD_DHCP
@@ -178,7 +180,7 @@
 	"bootargs_mmc=setenv bootargs ${bootargs} ip=dhcp root=/dev/mmcblk0p1 rootwait\0"			\
 	"bootcmd_mmc=run bootargs_base bootargs_mmc; mmc dev 3; mmc read ${loadaddr} 0x800 0x2000; bootm\0"			\
 	"ethact=FEC0\0"			\
-	"bootargs=console=ttymxc3,115200 root=/dev/nfs ip=dhcp nfsroot=192.168.1.101:/opt/eldk/arm,v3,tcp\0"			\
+	"bootargs=console=ttymxc3,115200 root=/dev/nfs ip=dhcp nfsroot=192.168.2.1:/opt/eldk/arm,v3,tcp\0"			\
 	"memory=mem=768M\0"			\
 	"bootdev=mmc dev 2; ext2load mmc 2:1\0"			\
 	"root=root=/dev/mmcblk0p1\0"			\
@@ -203,7 +205,7 @@
  */
 #define CONFIG_SYS_LONGHELP		/* undef to save memory */
 
-#define CONFIG_SYS_PROMPT		"MX6Q UDOO U-Boot > "
+#define CONFIG_SYS_PROMPT		"MX6Q UDOO U-Boot...Jake's Hacked Quad Version > "
 
 #define CONFIG_AUTO_COMPLETE
 #define CONFIG_SYS_CBSIZE		1024	/* Console I/O Buffer Size */
@@ -235,8 +237,8 @@
 #define CONFIG_CMD_MII
 #define CONFIG_CMD_DHCP
 #define CONFIG_CMD_PING
-#define CONFIG_IPADDR			192.168.1.103
-#define CONFIG_SERVERIP			192.168.1.101
+#define CONFIG_IPADDR			192.168.2.9
+#define CONFIG_SERVERIP			192.168.2.1
 #define CONFIG_NETMASK			255.255.255.0
 
 /*
@@ -463,7 +465,7 @@
 #define CONFIG_FASTBOOT_PRODUCT_ID     0x0d02
 #define CONFIG_FASTBOOT_BCD_DEVICE     0x311
 #define CONFIG_FASTBOOT_MANUFACTURER_STR  "Freescale"
-#define CONFIG_FASTBOOT_PRODUCT_NAME_STR "i.mx6dl UDOO SmartDevice"
+#define CONFIG_FASTBOOT_PRODUCT_NAME_STR "i.mx6q UDOO SmartDevice"
 #define CONFIG_FASTBOOT_INTERFACE_STR	 "Android fastboot"
 #define CONFIG_FASTBOOT_CONFIGURATION_STR  "Android fastboot"
 #define CONFIG_FASTBOOT_SERIAL_NUM	"12345"
