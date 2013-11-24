@@ -97,8 +97,10 @@
 /*
  * Hardware drivers
  */
+//#########################
 #define CONFIG_MXC_UART
-#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR
+#define CONFIG_UART_BASE_ADDR   UART4_BASE_ADDR
+//#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR
 
 
 /* allow to overwrite serial and ethaddr */
@@ -243,8 +245,8 @@
 #define CONFIG_CMD_MII
 #define CONFIG_CMD_DHCP
 #define CONFIG_CMD_PING
-#define CONFIG_IPADDR			192.168.1.103
-#define CONFIG_SERVERIP			192.168.1.101
+#define CONFIG_IPADDR			192.168.2.9
+#define CONFIG_SERVERIP			192.168.2.1
 #define CONFIG_NETMASK			255.255.255.0
 
 /*

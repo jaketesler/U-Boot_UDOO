@@ -28,6 +28,19 @@
 #define CONFIG_CMD_SNTP		/* SNTP support		*/
 
 
+#define CONFIG_LOOPW
+		/*Add the "loopw" memory command. This only takes effect if
+		the memory commands are activated globally (CONFIG_CMD_MEM).*/
+
+//#define CONFIG_SYS_ALT_MEMTEST
+		/*Enable an alternate, more extensive memory test.*/ 
+//#define CONFIG_SYS_MEMTEST_SCRATCH
+				/*Scratch address used by the alternate memory test
+				You only need to set this if address zero isn't writeable*/
+//##disabled because...we don't need it.
+		
+
+
 //#define CONFIG_CMD_DIAG		/* (POST?) Diagnostics			*/
 
 
@@ -46,3 +59,15 @@
 
 
 #endif	/* _CONFIG_CMD_ADDITIONS_H */
+
+
+/* OTHER COMMANDS POSSIBLY TO INTEGRATE
+- Show boot progress:
+		CONFIG_SHOW_BOOT_PROGRESS
+
+		Defining this option allows to add some board-
+		specific code (calling a user-provided function
+		"show_boot_progress(int)") that enables you to show
+		the system's boot progress on some display (for
+		example, some LED's) on your board. At the moment,
+		the following checkpoints are implemented:*/
