@@ -89,8 +89,8 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-#define JCONFIG_USE_UART_4	//#########
-#undef JCONFIG_USE_UART_2	//#########
+#define JCONFIG_USE_UART_2	//#########
+#undef JCONFIG_USE_UART_4	//#########
 
 static enum boot_device boot_dev;
 
