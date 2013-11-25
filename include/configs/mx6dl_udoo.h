@@ -98,9 +98,25 @@
  * Hardware drivers
  */
 //#########################
+
+//from mx6.h
+#define AIPS1_ARB_BASE_ADDR             0x02000000
+#define AIPS2_ARB_BASE_ADDR             0x02100000
+#define ATZ1_BASE_ADDR              AIPS1_ARB_BASE_ADDR
+#define ATZ2_BASE_ADDR              AIPS2_ARB_BASE_ADDR
+#define AIPS2_OFF_BASE_ADDR         (ATZ2_BASE_ADDR + 0x80000)
+
+#define UART4_IPS_BASE_ADDR         (ATZ1_BASE_ADDR + 0x38000)
+#define UART4_BASE_ADDR             (AIPS2_OFF_BASE_ADDR + 0x70000)
+
+#define CONFIG_CONSOLE_MUX //added
 #define CONFIG_MXC_UART
 #define CONFIG_UART_BASE_ADDR   UART4_BASE_ADDR		//uart4 (radio) serial
 //#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR		//uart2 usb
+
+
+
+
 
 
 /* allow to overwrite serial and ethaddr */

@@ -88,6 +88,7 @@
 /*
  * Hardware drivers
  */
+#define CONFIG_CONSOLE_MUX //added
 #define CONFIG_MXC_UART
 //#define CONFIG_UART_BASE_ADDR   UART4_BASE_ADDR		//uart4 (radio) serial
 #define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR		//usb
