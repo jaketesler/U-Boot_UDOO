@@ -99,8 +99,8 @@
  */
 //#########################
 #define CONFIG_MXC_UART
-//#define CONFIG_UART_BASE_ADDR   UART4_BASE_ADDR		//uart4 (radio) serial
-#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR		//uart2 usb
+#define CONFIG_UART_BASE_ADDR   UART4_BASE_ADDR		//uart4 (radio) serial
+//#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR		//uart2 usb
 
 
 /* allow to overwrite serial and ethaddr */
