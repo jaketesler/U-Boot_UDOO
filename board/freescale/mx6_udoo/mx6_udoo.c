@@ -27,8 +27,8 @@
 #define CONFIG_DEBUG_DUMP
 #define DEBUG_EARLY_SERIAL
 #define CONFIG_DEBUG_EARLY_SERIAL
-//#define HW_WATCHDOG
-//#define CONFIG_HW_WATCHDOG
+#define HW_WATCHDOG
+#define CONFIG_HW_WATCHDOG
 
 #include <common.h>
 #include <asm/io.h>
