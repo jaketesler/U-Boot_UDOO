@@ -25,6 +25,13 @@
 #include <asm/arch/mx6.h>
 
 #define DEBUG //added
+#define CONFIG_DEBUG
+#define DEBUG_DUMP
+#define CONFIG_DEBUG_DUMP
+#define DEBUG_EARLY_SERIAL
+#define CONFIG_DEBUG_EARLY_SERIAL
+//#define HW_WATCHDOG
+//#define CONFIG_HW_WATCHDOG
 
 
  /* High Level Configuration Options */
@@ -66,8 +73,12 @@
  * change u-boot.lds */
 #undef CONFIG_SECURE_BOOT
 
+/*Officially disabling android boot */
 #undef USE_ANDROID_CONFIG_SUB //########added
 #undef UDOO_ANDROID //########added
+
+#undef CONFIG_DISABLE_CONSOLE	//########added
+#undef CONFIG_SILENT_CONSOLE	//########added
 
 
 #define CONFIG_SKIP_RELOCATE_UBOOT
@@ -129,9 +140,9 @@
 #define CONFIG_BAUDRATE			115200
 #define CONFIG_SYS_BAUDRATE_TABLE	{9600, 19200, 38400, 57600, 115200}
 
-#define CONFIG_STD_DEVICES_SETTINGS     "stdin=serial\0" \
-                                        "stdout=serial\0" \
-                                        "stderr=serial\0"
+#define CONFIG_STD_DEVICES_SETTINGS     "stdin=serial,ttymxc3\0" \
+                                        "stdout=serial,ttymxc3\0" \
+                                        "stderr=serial,ttymxc3\0"
 //possibly should be ["stdin=serial,ttymxc3"]???
 
 //#define CONFIG_SYS_CONSOLE_OVERWRITE_ROUTINE	//?? this exists in MMC below, 
@@ -199,7 +210,7 @@
 		"splashimage=0x30000000\0"				\
 		"splashpos=m,m\0"					\
 		"lvds_num=1\0"                   \
-		"bootargs=console=ttymxc3,mmio,0x21f0000,115200n8 init=/init video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24,bpp=32 video=mxcfb1:off video=mxcfb2:off fbmem=28M vmalloc=400M androidboot.console=ttymxc3 androidboot.hardware=freescale\0"
+		"bootargs=console=ttymxc3,mmio,0x21f0000,115200 init=/init video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24,bpp=32 video=mxcfb1:off video=mxcfb2:off fbmem=28M vmalloc=400M androidboot.console=ttymxc3 androidboot.hardware=freescale\0"
 #endif
 
 #ifdef UDOO_LINUX
@@ -214,13 +225,13 @@
 	"stdin=serial\0"			\
 	"stdout=serial\0"			\
 	"stderr=serial\0"			\
-	"bootargs_base=setenv bootargs console=ttymxc3,mmio,0x21f0000,115200n8\0"			\
+	"bootargs_base=setenv bootargs console=ttymxc3,mmio,0x21f0000,115200\0"			\
 	"bootargs_nfs=setenv bootargs ${bootargs} root=/dev/nfs ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0"			\
 	"bootcmd_net=run bootargs_base bootargs_nfs; tftpboot ${loadaddr} ${kernel}; bootm\0"			\
 	"bootargs_mmc=setenv bootargs ${bootargs} ip=dhcp root=/dev/mmcblk0p1 rootwait\0"			\
 	"bootcmd_mmc=run bootargs_base bootargs_mmc; mmc dev 3; mmc read ${loadaddr} 0x800 0x2000; bootm\0"			\
 	"ethact=FEC0\0"			\
-	"bootargs=console=ttymxc3,mmio,0x21f0000,115200n8 root=/dev/nfs ip=dhcp nfsroot=192.168.2.1:/opt/eldk/arm,v3,tcp\0"			\
+	"bootargs=console=ttymxc3,mmio,0x21f0000,115200 root=/dev/nfs ip=dhcp nfsroot=192.168.2.1:/opt/eldk/arm,v3,tcp\0"			\
 	"memory=mem=768M\0"			\
 	"bootdev=mmc dev 2; ext2load mmc 2:1\0"			\
 	"root=root=/dev/mmcblk0p1\0"			\
@@ -228,13 +239,16 @@
 	"setvideomode=setenv videomode video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24\0"			\
 	"cpu_freq=arm_freq=996\0"			\
 	"run_from_nfs=0\0"			\
-	"setbootargs_nfs=setenv bootargs console=ttymxc3,mmio,0x21f0000,115200n8 root=/dev/nfs nfsroot=${ip_server}:${nfs_path}nolock,wsize=4096,rsize=4096 ip=${ip_local} ${memory} ${cpu_freq} ${videomode}\0"			\
+	"setbootargs_nfs=setenv bootargs console=ttymxc3,mmio,0x21f0000,115200 root=/dev/nfs nfsroot=${ip_server}:${nfs_path}nolock,wsize=4096,rsize=4096 ip=${ip_local} ${memory} ${cpu_freq} ${videomode}\0"			\
 	"setbootargs=setenv bootargs console=ttymxc3,115200 ${root} ${option} ${memory} ${cpu_freq} ${videomode}\0"			\
 	"setbootdev=setenv boot_dev ${bootdev} 10800000 /boot/uImage\0"			\
 	"bootcmd=run setvideomode; run setbootargs; run setbootdev; run boot_dev; bootm 10800000\0"			\
-	"stdin=serial\0"			\
-	"stdout=serial\0"			\
-	"stderr=serial\0"
+	"stdin=serial,ttymxc3\0" \
+    "stdout=serial,ttymxc3\0" \
+	"stderr=serial,ttymxc3\0"
+	//"stdin=serial\0"			\
+	//"stdout=serial\0"			\
+	//"stderr=serial\0"
 #endif
 
 
