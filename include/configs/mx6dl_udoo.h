@@ -246,8 +246,8 @@
 	"stdin=serial,ttymxc3\0" \
     "stdout=serial,ttymxc3\0" \
 	"stderr=serial,ttymxc3\0"
-	//"stdin=serial\0"			\
-	//"stdout=serial\0"			\
+	//"stdin=serial\0"
+	//"stdout=serial\0"
 	//"stderr=serial\0"
 #endif
 
