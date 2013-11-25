@@ -538,8 +538,8 @@ int do_udooconfig (cmd_tbl_t * cmd, int flag, int argc, char *argv[]) {
 		setenv ("run_from_nfs", "1");
 	}
 
-	setenv("setbootargs_nfs", "setenv bootargs console=ttymxc1,115200 root=/dev/nfs nfsroot=${ip_server}:${nfs_path}nolock,wsize=4096,rsize=4096 ip=${ip_local} ${memory} ${cpu_freq} ${videomode}");
-	setenv("setbootargs", "setenv bootargs console=ttymxc1,115200 ${root} ${option} ${memory} ${cpu_freq} ${videomode}");
+	setenv("setbootargs_nfs", "setenv bootargs console=ttymxc3,115200 root=/dev/nfs nfsroot=${ip_server}:${nfs_path}nolock,wsize=4096,rsize=4096 ip=${ip_local} ${memory} ${cpu_freq} ${videomode}");
+	setenv("setbootargs", "setenv bootargs console=ttymxc3,115200 ${root} ${option} ${memory} ${cpu_freq} ${videomode}");
 	setenv("setbootdev", "setenv boot_dev ${bootdev}");
 	setenv("bootcmd", "run setvideomode; run setbootargs; run setbootdev; run boot_dev;");
 	saveenv();
