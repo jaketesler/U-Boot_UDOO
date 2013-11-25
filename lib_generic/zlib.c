@@ -83,8 +83,8 @@ typedef unsigned long ulg;
 
 /* Diagnostic functions */
 #ifdef DEBUG
-//#include <stdio.h>
-#include <stdio_dev.h> //replaced
+#include <stdio.h>
+//#include <stdio_dev.h> //replaced
 	extern int z_verbose;
 	extern void z_error    OF((char *m));
 #define Assert(cond,msg) {if(!(cond)) z_error(msg);}
