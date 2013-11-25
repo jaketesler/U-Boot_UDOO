@@ -22,9 +22,8 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
-#include <asm/arch/mx6.h>
-
 #define DEBUG //added
+#define DEBUG_LEVEL_HIGH
 #define CONFIG_DEBUG
 #define DEBUG_DUMP
 #define CONFIG_DEBUG_DUMP
@@ -32,6 +31,10 @@
 #define CONFIG_DEBUG_EARLY_SERIAL
 //#define HW_WATCHDOG
 //#define CONFIG_HW_WATCHDOG
+
+#include <asm/arch/mx6.h>
+
+
 
 
  /* High Level Configuration Options */
