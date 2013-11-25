@@ -27,6 +27,7 @@
 #define ZLIB_INTERNAL
 
 #include "u-boot/zlib.h"
+#include <common.h> //added from patch
 /* To avoid a build time warning */
 #ifdef STDC
 #include <malloc.h>
@@ -83,11 +84,11 @@ typedef unsigned long ulg;
 
 /* Diagnostic functions */
 #ifdef DEBUG
-#include <stdio.h>
-//#include <stdio_dev.h> //replaced
+//#include <stdio.h> //removed by patch
 	extern int z_verbose;
 	extern void z_error    OF((char *m));
 #define Assert(cond,msg) {if(!(cond)) z_error(msg);}
+#define fprintf(fp,...)	printf(__VA_ARGS__) //added from patch
 #define Trace(x) {if (z_verbose>=0) fprintf x ;}
 #define Tracev(x) {if (z_verbose>0) fprintf x ;}
 #define Tracevv(x) {if (z_verbose>1) fprintf x ;}
@@ -2001,7 +2002,8 @@ void z_error (m)
     char *m;
 {
 	fprintf(stderr, "%s\n", m);
-	exit(1);
+	//exit(1); //removed by patch
+	hang (); 
 }
 #endif
 
