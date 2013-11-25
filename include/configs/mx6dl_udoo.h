@@ -24,6 +24,9 @@
 
 #include <asm/arch/mx6.h>
 
+#define DEBUG //added
+
+
  /* High Level Configuration Options */
 #define CONFIG_ARMV7	/* This is armv7 Cortex-A9 CPU core */
 #define CONFIG_MXC
@@ -62,6 +65,10 @@
  * feature, please carefully read related documents, you may needs to
  * change u-boot.lds */
 #undef CONFIG_SECURE_BOOT
+
+#undef USE_ANDROID_CONFIG_SUB //########added
+#undef UDOO_ANDROID //########added
+
 
 #define CONFIG_SKIP_RELOCATE_UBOOT
 
@@ -115,18 +122,17 @@
 //#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR		//uart2 usb
 
 
-#define CONFIG_STD_DEVICES_SETTINGS     "stdin=serial\0" \
-                                        "stdout=serial\0" \
-                                        "stderr=serial\0"
 
-
-
-/* allow to overwrite 
- and ethaddr */
+/* allow to overwrite and ethaddr */
 #define CONFIG_ENV_OVERWRITE
 #define CONFIG_CONS_INDEX		1
 #define CONFIG_BAUDRATE			115200
 #define CONFIG_SYS_BAUDRATE_TABLE	{9600, 19200, 38400, 57600, 115200}
+
+#define CONFIG_STD_DEVICES_SETTINGS     "stdin=serial\0" \
+                                        "stdout=serial\0" \
+                                        "stderr=serial\0"
+
 
 /***********************************************************
  * Command definition
@@ -480,8 +486,11 @@
 #endif /* CONFIG_SPLASH_SCREEN */
 #endif				/* __CONFIG_H */
 
+
 #define CONFIG_USB_DEVICE
 #define CONFIG_IMX_UDC		       1
+#define CONFIG_CMD_BOOTI
+#ifdef USE_ANDROID_CONFIG_SUB
 #define CONFIG_FASTBOOT		       1
 #define CONFIG_FASTBOOT_STORAGE_EMMC_SATA
 #define CONFIG_FASTBOOT_VENDOR_ID      0x18d1
@@ -500,7 +509,7 @@
 #define CONFIG_FASTBOOT_TRANSFER_BUF_SIZE 0x14000000 /* 320M byte */
 
 
-#define CONFIG_CMD_BOOTI
+
 #define CONFIG_ANDROID_RECOVERY
 /* which mmc bus is your main storage ? */
 #define CONFIG_ANDROID_MAIN_MMC_BUS 3
@@ -516,3 +525,4 @@
 	"booti mmc2 recovery"
 #define CONFIG_ANDROID_RECOVERY_CMD_FILE "/recovery/command"
 #define CONFIG_INITRD_TAG
+#endif
