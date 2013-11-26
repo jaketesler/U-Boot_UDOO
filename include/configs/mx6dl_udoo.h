@@ -130,11 +130,12 @@
 #define UART4_IPS_BASE_ADDR         (ATZ1_BASE_ADDR + 0x38000)
 #define UART4_BASE_ADDR             (AIPS2_OFF_BASE_ADDR + 0x70000)
 
-#define CONFIG_CONSOLE_MUX //added...used in /common/iomux.c
+//#define CONFIG_CONSOLE_MUX //temporarily removed 		//added...used in /common/iomux.c
 #define CONFIG_MXC_UART
 #define CONFIG_UART_BASE_ADDR   UART4_BASE_ADDR		//uart4 (radio) serial
 //#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR		//uart2 usb
-
+#define CONFIG_CFB_CONSOLE //added 
+#define CONFIG_CFB_CONSOLE_ANSI //added
 
 
 /* allow to overwrite and ethaddr */
@@ -225,9 +226,11 @@
 	"uboot=u-boot.bin\0"			\
 	"kernel=uImage\0"			\
 	"nfsroot=/opt/eldk/arm\0"			\
-	"stdin=serial\0"			\
-	"stdout=serial\0"			\
-	"stderr=serial\0"			\
+	//"stdin=serial\0"			
+	//"stdout=serial\0"			
+	//"stderr=serial\0"			
+	"baudrate=115200\0"	\ //added
+	"console=console=ttymxc3,mmio,0x21f0000,115200\0" \
 	"bootargs_base=setenv bootargs console=ttymxc3,mmio,0x21f0000,115200\0"			\
 	"bootargs_nfs=setenv bootargs ${bootargs} root=/dev/nfs ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0"			\
 	"bootcmd_net=run bootargs_base bootargs_nfs; tftpboot ${loadaddr} ${kernel}; bootm\0"			\
