@@ -134,8 +134,9 @@
 #define CONFIG_MXC_UART
 #define CONFIG_UART_BASE_ADDR   UART4_BASE_ADDR		//uart4 (radio) serial
 //#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR		//uart2 usb
-#define CONFIG_CFB_CONSOLE //added 
-#define CONFIG_CFB_CONSOLE_ANSI //added
+
+//#define CONFIG_CFB_CONSOLE //added //##both CFB defs crash the compiler, undeclared vars
+//#define CONFIG_CFB_CONSOLE_ANSI //added
 
 
 /* allow to overwrite and ethaddr */
