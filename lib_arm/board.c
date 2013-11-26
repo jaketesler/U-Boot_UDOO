@@ -36,9 +36,10 @@
  * U-Boot code: 00F00000 -> 00F3C774  BSS: -> 00FC3274
  * IRQ Stack: 00ebff7c
  * FIQ Stack: 00ebef7c
+ * Jake's Add'l info
  */
 
-#define DEBUG
+#define DEBUG //added
 
 #include <common.h>
 #include <command.h>
@@ -177,6 +178,17 @@ static int init_baudrate (void)
 	return (0);
 }
 
+static int iwant_moreinfo (void)
+{
+	printf ("EXTENDED UDOO UART Info: ");
+	printf ("[CONSOLE]:%08lx", getenv ("console"));
+	printf ("[STDIN]:%08lx", getenv ("stdin"));
+	printf ("[STDOUT]:%08lx", getenv ("stdout"));
+	printf ("[STDERR]:%08lx", getenv ("stderr"));
+	printf ("[BOOTARGS_BASE]:%08lx", getenv ("bootargs_base"));
+	printf ("END more info...");
+}
+
 static int display_banner (void)
 {
 	printf ("\n\n%s\n\n", version_string);
@@ -295,6 +307,7 @@ init_fnc_t *init_sequence[] = {
 	serial_init,		/* serial communications setup */
 	console_init_f,		/* stage 1 init of console */
 	display_banner,		/* say that we are here */
+	iwant_moreinfo, 
 #if defined(CONFIG_DISPLAY_CPUINFO)
 	print_cpuinfo,		/* display cpu info (and speed) */
 #endif
