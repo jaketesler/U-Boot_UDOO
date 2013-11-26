@@ -22,13 +22,13 @@
 
 #define DEBUG //added
 #define DEBUG_LEVEL_HIGH
-#define CONFIG_DEBUG
-#define DEBUG_DUMP
-#define CONFIG_DEBUG_DUMP
-#define DEBUG_EARLY_SERIAL
-#define CONFIG_DEBUG_EARLY_SERIAL
-#define HW_WATCHDOG
-#define CONFIG_HW_WATCHDOG
+//#define CONFIG_DEBUG
+//#define DEBUG_DUMP
+//#define CONFIG_DEBUG_DUMP
+//#define DEBUG_EARLY_SERIAL
+//#define CONFIG_DEBUG_EARLY_SERIAL
+//#define HW_WATCHDOG
+//#define CONFIG_HW_WATCHDOG
 
 #include <common.h>
 #include <asm/io.h>

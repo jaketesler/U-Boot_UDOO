@@ -130,8 +130,9 @@
 #define UART4_IPS_BASE_ADDR         (ATZ1_BASE_ADDR + 0x38000)
 #define UART4_BASE_ADDR             (AIPS2_OFF_BASE_ADDR + 0x70000)
 
-//#define CONFIG_CONSOLE_MUX //temporarily removed 		//added...used in /common/iomux.c
+//#define CONFIG_CONSOLE_MUX //permanently removed, suddenly worked without this
 #define CONFIG_MXC_UART
+
 #define CONFIG_UART_BASE_ADDR   UART4_BASE_ADDR		//uart4 (radio) serial
 //#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR		//uart2 usb
 
@@ -148,7 +149,6 @@
 #define CONFIG_STD_DEVICES_SETTINGS     "stdin=serial,ttymxc3\0" \
                                         "stdout=serial,ttymxc3\0" \
                                         "stderr=serial,ttymxc3\0"
-//possibly should be ["stdin=serial,ttymxc3"]???
 
 //#define CONFIG_SYS_CONSOLE_OVERWRITE_ROUTINE	//?? this exists in MMC below, 
 												//but might be used to enable consoles
