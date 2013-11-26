@@ -226,10 +226,7 @@
 	"uboot=u-boot.bin\0"			\
 	"kernel=uImage\0"			\
 	"nfsroot=/opt/eldk/arm\0"			\
-	//"stdin=serial\0"			
-	//"stdout=serial\0"			
-	//"stderr=serial\0"			
-	"baudrate=115200\0"	\ //added
+	"baudrate=115200\0"	\
 	"console=console=ttymxc3,mmio,0x21f0000,115200\0" \
 	"bootargs_base=setenv bootargs console=ttymxc3,mmio,0x21f0000,115200\0"			\
 	"bootargs_nfs=setenv bootargs ${bootargs} root=/dev/nfs ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0"			\
