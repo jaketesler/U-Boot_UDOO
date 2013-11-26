@@ -180,13 +180,13 @@ static int init_baudrate (void)
 
 static int iwant_moreinfo (void)
 {
-	printf ("EXTENDED UDOO UART Info: ");
-	printf ("[CONSOLE]:%08lx", getenv ("console"));
-	printf ("[STDIN]:%08lx", getenv ("stdin"));
-	printf ("[STDOUT]:%08lx", getenv ("stdout"));
-	printf ("[STDERR]:%08lx", getenv ("stderr"));
-	printf ("[BOOTARGS_BASE]:%08lx", getenv ("bootargs_base"));
-	printf ("END more info...");
+	printf ("\nEXTENDED UDOO UART Info: \n");
+	printf ("[CONSOLE]:%s\n", getenv ("console"));
+	printf ("[STDIN]:%s\n", getenv ("stdin"));
+	printf ("[STDOUT]:%s\n", getenv ("stdout"));
+	printf ("[STDERR]:%s\n", getenv ("stderr"));
+	printf ("[BOOTARGS_BASE]:%s\n", getenv ("bootargs_base"));
+	printf ("END more info...\n\n");
 }
 
 static int display_banner (void)
