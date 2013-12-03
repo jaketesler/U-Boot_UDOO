@@ -265,7 +265,7 @@
  */
 #define CONFIG_SYS_LONGHELP		/* undef to save memory */
 
-#define CONFIG_SYS_PROMPT		"MX6DL UDOO U-Boot...Jake's Hacked Version > "
+#define CONFIG_SYS_PROMPT		"MX6DL UDOO U-Boot...Jake's Version > "
 
 #define CONFIG_AUTO_COMPLETE
 #define CONFIG_SYS_CBSIZE		1024	/* Console I/O Buffer Size */
