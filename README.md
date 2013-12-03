@@ -48,3 +48,6 @@
 
 *	/Makefile
 	*	Custom Makefile for our purposes
+	
+<br>
+**Jake's really dumb solution to change UARTs: To change default UARTs, do a global search for UARTx and ttymxc(x-1) and imx.uart(x-1).**
