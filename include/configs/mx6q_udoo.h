@@ -21,7 +21,17 @@
 
 #ifndef __CONFIG_H
 #define __CONFIG_H
-
+/*
+#define DEBUG //added
+#define DEBUG_LEVEL_HIGH
+#define CONFIG_DEBUG
+#define DEBUG_DUMP
+#define CONFIG_DEBUG_DUMP
+#define DEBUG_EARLY_SERIAL
+#define CONFIG_DEBUG_EARLY_SERIAL
+//#define HW_WATCHDOG
+//#define CONFIG_HW_WATCHDOG
+*/
 #include <asm/arch/mx6.h>
 
  /* High Level Configuration Options */
@@ -52,7 +62,6 @@
 		1 ->  LDDR3
 */
 #define CONFIG_DDR_SIZE	DDR_SIZE_CONF
-
 #define CONFIG_DDR_TYPE DDR_TYPE_CONF
 
 #if(CONFIG_DDR_SIZE == 0)
@@ -60,6 +69,16 @@
 #elif(CONFIG_DDR_SIZE > 0)
 	#define CONFIG_DDR_64BIT
 #endif
+
+
+
+/*Officially disabling android boot*/
+#undef USE_ANDROID_CONFIG_SUB //########added
+#undef UDOO_ANDROID //########added
+
+#undef CONFIG_DISABLE_CONSOLE	//########added
+#undef CONFIG_SILENT_CONSOLE	//########added
+
 
 #define CONFIG_MX6_HCLK_FREQ	24000000
 
@@ -88,10 +107,25 @@
 /*
  * Hardware drivers
  */
-#define CONFIG_CONSOLE_MUX //added
+//from mx6.h
+#define AIPS1_ARB_BASE_ADDR             0x02000000
+#define AIPS2_ARB_BASE_ADDR             0x02100000
+#define ATZ1_BASE_ADDR              AIPS1_ARB_BASE_ADDR
+#define ATZ2_BASE_ADDR              AIPS2_ARB_BASE_ADDR
+#define AIPS2_OFF_BASE_ADDR         (ATZ2_BASE_ADDR + 0x80000)
+
+#define UART4_IPS_BASE_ADDR         (ATZ1_BASE_ADDR + 0x38000)
+#define UART4_BASE_ADDR             (AIPS2_OFF_BASE_ADDR + 0x70000)
+
+//#define CONFIG_CONSOLE_MUX //permanently removed, suddenly worked without this
 #define CONFIG_MXC_UART
-//#define CONFIG_UART_BASE_ADDR   UART4_BASE_ADDR		//uart4 (radio) serial
-#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR		//usb
+
+#define CONFIG_UART_BASE_ADDR   UART4_BASE_ADDR		//uart4 (radio) serial
+//#define CONFIG_UART_BASE_ADDR   UART2_BASE_ADDR		//uart2 usb
+
+//#define CONFIG_CFB_CONSOLE //added //##both CFB defs crash the compiler, undeclared vars
+//#define CONFIG_CFB_CONSOLE_ANSI //added
+
 
 
 /* allow to overwrite serial and ethaddr */
@@ -99,6 +133,15 @@
 #define CONFIG_CONS_INDEX		1
 #define CONFIG_BAUDRATE			115200
 #define CONFIG_SYS_BAUDRATE_TABLE	{9600, 19200, 38400, 57600, 115200}
+
+
+#define CONFIG_STD_DEVICES_SETTINGS     "stdin=serial,ttymxc3\0" \
+                                        "stdout=serial,ttymxc3\0" \
+                                        "stderr=serial,ttymxc3\0"
+
+//#define CONFIG_SYS_CONSOLE_OVERWRITE_ROUTINE	//?? this exists in MMC below, 
+												//but might be used to enable consoles
+
 
 /***********************************************************
  * Command definition
@@ -120,7 +163,7 @@
 #define CONFIG_CMD_SPI
 #define CONFIG_CMD_I2C
 #define CONFIG_CMD_IMXOTP
-#define CONFIG_CMD_UDOOCONFIG
+#define CONFIG_CMD_UDOOCONFIG	//specialized UDOOconfig command
 #define CONFIG_TIMESTAMP
 #define CONFIG_CMD_RTC
 #define CONFIG_RTC_PCF2123
@@ -146,7 +189,7 @@
 
 #define CONFIG_CMD_IMX_DOWNLOAD_MODE
 
-#define CONFIG_BOOTDELAY 3
+#define CONFIG_BOOTDELAY 3	/*autoboot delay*/
 
 #define CONFIG_PRIME	"FEC0"
 
@@ -163,7 +206,7 @@
 		"splashimage=0x30000000\0"				\
 		"splashpos=m,m\0"					\
 		"lvds_num=1\0"                   \
-		"bootargs=console=ttymxc3,115200 init=/init video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24,bpp=32 video=mxcfb1:off video=mxcfb2:off fbmem=28M vmalloc=400M androidboot.console=ttymxc3 androidboot.hardware=freescale\0"
+		"bootargs=console=ttymxc3,mmio,0x21f0000,115200 init=/init video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24,bpp=32 video=mxcfb1:off video=mxcfb2:off fbmem=28M vmalloc=400M androidboot.console=ttymxc3 androidboot.hardware=freescale\0"
 #endif
 
 #ifdef UDOO_LINUX
@@ -175,13 +218,13 @@
 	"uboot=u-boot.bin\0"			\
 	"kernel=uImage\0"			\
 	"nfsroot=/opt/eldk/arm\0"			\
-	"bootargs_base=setenv bootargs console=ttymxc3,115200\0"			\
+	"bootargs_base=setenv bootargs console=ttymxc3,mmio,0x21f0000,115200\0"			\
 	"bootargs_nfs=setenv bootargs ${bootargs} root=/dev/nfs ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0"			\
 	"bootcmd_net=run bootargs_base bootargs_nfs; tftpboot ${loadaddr} ${kernel}; bootm\0"			\
 	"bootargs_mmc=setenv bootargs ${bootargs} ip=dhcp root=/dev/mmcblk0p1 rootwait\0"			\
 	"bootcmd_mmc=run bootargs_base bootargs_mmc; mmc dev 3; mmc read ${loadaddr} 0x800 0x2000; bootm\0"			\
 	"ethact=FEC0\0"			\
-	"bootargs=console=ttymxc3,115200 root=/dev/nfs ip=dhcp nfsroot=192.168.2.1:/opt/eldk/arm,v3,tcp\0"			\
+	"bootargs=console=ttymxc3,mmio,0x21f0000,115200 root=/dev/nfs ip=dhcp nfsroot=192.168.2.1:/opt/eldk/arm,v3,tcp\0"			\
 	"memory=mem=768M\0"			\
 	"bootdev=mmc dev 2; ext2load mmc 2:1\0"			\
 	"root=root=/dev/mmcblk0p1\0"			\
@@ -189,15 +232,19 @@
 	"setvideomode=setenv videomode video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24\0"			\
 	"cpu_freq=arm_freq=996\0"			\
 	"run_from_nfs=0\0"			\
-	"setbootargs_nfs=setenv bootargs console=ttymxc3,115200 root=/dev/nfs nfsroot=${ip_server}:${nfs_path}nolock,wsize=4096,rsize=4096 ip=${ip_local} ${memory} ${cpu_freq} ${videomode}\0"			\
-	"setbootargs=setenv bootargs console=ttymxc3,115200 ${root} ${option} ${memory} ${cpu_freq} ${videomode}\0"			\
+	"setbootargs_nfs=setenv bootargs console=ttymxc3,mmio,0x21f0000,115200 root=/dev/nfs nfsroot=${ip_server}:${nfs_path}nolock,wsize=4096,rsize=4096 ip=${ip_local} ${memory} ${cpu_freq} ${videomode}\0"			\
+	"setbootargs=setenv bootargs console=ttymxc3,mmio,0x21f0000,115200 ${root} ${option} ${memory} ${cpu_freq} ${videomode}\0"			\
 	"setbootdev=setenv boot_dev ${bootdev} 10800000 /boot/uImage\0"			\
 	"bootcmd=run setvideomode; run setbootargs; run setbootdev; run boot_dev; bootm 10800000\0"			\
-	"stdin=serial\0"			\
-	"stdout=serial\0"			\
-	"stderr=serial\0"
+	"stdin=serial,ttymxc3\0" \
+    "stdout=serial,ttymxc3\0" \
+	"stderr=serial,ttymxc3\0"
+	//"stdin=serial\0"
+	//"stdout=serial\0"
+	//"stderr=serial\0"
 #endif
 
+//console=ttymxc3,mmio,0x21f0000,115200
 
 #define CONFIG_ARP_TIMEOUT	200UL
 
@@ -206,7 +253,7 @@
  */
 #define CONFIG_SYS_LONGHELP		/* undef to save memory */
 
-#define CONFIG_SYS_PROMPT		"MX6Q UDOO U-Boot...Jake's Hacked Quad Version > "
+#define CONFIG_SYS_PROMPT		"MX6Q UDOO U-Boot...Jake's Quad Version > "
 
 #define CONFIG_AUTO_COMPLETE
 #define CONFIG_SYS_CBSIZE		1024	/* Console I/O Buffer Size */

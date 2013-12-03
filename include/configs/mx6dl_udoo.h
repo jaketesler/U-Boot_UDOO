@@ -173,7 +173,7 @@
 #define CONFIG_CMD_SPI
 #define CONFIG_CMD_I2C
 #define CONFIG_CMD_IMXOTP
-#define CONFIG_CMD_UDOOCONFIG //specialized UDOOconfig command
+#define CONFIG_CMD_UDOOCONFIG	//specialized UDOOconfig command
 #define CONFIG_TIMESTAMP
 #define CONFIG_CMD_RTC
 #define CONFIG_RTC_PCF2123
