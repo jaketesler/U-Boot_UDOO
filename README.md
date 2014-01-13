@@ -108,8 +108,8 @@ Files:
 <br>
 <br><br><a name="mmio"></a>
 ###MMIO Values:
-UART1 imx-uart.0: ttymxc0 at MMIO 0x2020000 (irq = 58) is a IMX
-UART2 imx-uart.1: ttymxc1 at MMIO 0x21e8000 (irq = 59) is a IMX
-UART3 imx-uart.2: ttymxc2 at MMIO 0x21ec000 (irq = 60) is a IMX
-UART4 imx-uart.3: ttymxc3 at MMIO 0x21f0000 (irq = 61) is a IMX
-UART5 imx-uart.4: ttymxc4 at MMIO 0x21f4000 (irq = 62) is a IMX
+*	UART1 imx-uart.0: ttymxc0 at MMIO 0x2020000 (irq = 58) is a IMX
+*	UART2 imx-uart.1: ttymxc1 at MMIO 0x21e8000 (irq = 59) is a IMX
+*	UART3 imx-uart.2: ttymxc2 at MMIO 0x21ec000 (irq = 60) is a IMX
+*	UART4 imx-uart.3: ttymxc3 at MMIO 0x21f0000 (irq = 61) is a IMX
+*	UART5 imx-uart.4: ttymxc4 at MMIO 0x21f4000 (irq = 62) is a IMX
